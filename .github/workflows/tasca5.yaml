@@ -1,0 +1,44 @@
+name: Tasca5
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  unit-tests:
+    name: Tests Unitaris
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del codi
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Executar tests unitaris
+        run: mvn clean test
+
+  integration-tests:
+    name: Tests d'Integració
+    runs-on: ubuntu-latest
+    needs: unit-tests
+
+    steps:
+      - name: Checkout del codi
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Executar tests d'integració
+        run: mvn clean verify -Dskip.unit.tests=true
