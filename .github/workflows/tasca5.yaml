@@ -15,7 +15,7 @@ jobs:
         image: mysql:8
         env:
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: Circuit10KSpring
+          MYSQL_DATABASE: Circuit10kSpring
         ports:
           - 3306:3306
         options: >-
@@ -35,26 +35,26 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Instalando MySQL client
+      - name: Instalant client MySQL
         run: sudo apt-get install mysql-client
 
-      - name: Mostrar bases de datos
+      - name: Mostrar bases de dades
         run: mysql -h 127.0.0.1 -uroot -proot -e "SHOW DATABASES;"
 
-      - name: Esperar a MySQL
-        run: |
-          for i in {1..30}; do
-            if mysqladmin ping -h "127.0.0.1" -proot --silent; then
-              echo "MySQL is ready"
-              break
-            fi
-            echo "Waiting for MySQL..."
-            sleep 2
-          done
+#      - name: Esperar a MySQL
+#        run: |
+#          for i in {1..30}; do
+#            if mysqladmin ping -h "127.0.0.1" -proot --silent; then
+#              echo "MySQL is ready"
+#              break
+#            fi
+#            echo "Waiting for MySQL..."
+#            sleep 2
+#          done
 
-      - name: Create database
-        run: |
-          mysql -h 127.0.0.1 -uroot -proot -e "CREATE DATABASE IF NOT EXISTS Circuit10kSpring;"
+#      - name: Create database
+#        run: |
+#          mysql -h 127.0.0.1 -uroot -proot -e "CREATE DATABASE IF NOT EXISTS Circuit10kSpring;"
 
       - name: Executar tests unitaris
         run: mvn clean test -Dspring.profiles.active=ci
