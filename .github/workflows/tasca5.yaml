@@ -41,20 +41,5 @@ jobs:
       - name: Mostrar bases de dades
         run: mysql -h 127.0.0.1 -uroot -proot -e "SHOW DATABASES;"
 
-#      - name: Esperar a MySQL
-#        run: |
-#          for i in {1..30}; do
-#            if mysqladmin ping -h "127.0.0.1" -proot --silent; then
-#              echo "MySQL is ready"
-#              break
-#            fi
-#            echo "Waiting for MySQL..."
-#            sleep 2
-#          done
-
-#      - name: Create database
-#        run: |
-#          mysql -h 127.0.0.1 -uroot -proot -e "CREATE DATABASE IF NOT EXISTS Circuit10kSpring;"
-
       - name: Executar tests unitaris
         run: mvn clean test -Dspring.profiles.active=ci
