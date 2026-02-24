@@ -38,10 +38,10 @@ jobs:
       - name: Instalando MySQL client
         run: sudo apt-get install mysql-client
 
-      - name: Show databases
+      - name: Mostrar bases de datos
         run: mysql -h 127.0.0.1 -uroot -proot -e "SHOW DATABASES;"
 
-      - name: Wait for MySQL
+      - name: Esperar a MySQL
         run: |
           for i in {1..30}; do
             if mysqladmin ping -h "127.0.0.1" -proot --silent; then
@@ -51,6 +51,10 @@ jobs:
             echo "Waiting for MySQL..."
             sleep 2
           done
+
+      - name: Create database
+        run: |
+          mysql -h 127.0.0.1 -uroot -proot -e "CREATE DATABASE IF NOT EXISTS Circuit10kSpring;"
 
       - name: Executar tests unitaris
         run: mvn clean test -Dspring.profiles.active=ci
